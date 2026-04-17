@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-luxury-gold: #C5A059;
+  --color-luxury-cream: #F9F6F0;
+  --color-luxury-dark: #1A1A1A;
+  --color-luxury-charcoal: #2D2D2D;
+
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-luxury-cream);
+    color: var(--color-luxury-dark);
+    font-family: var(--font-sans);
+  }
+}
+
+.btn-primary {
+  @apply bg-luxury-gold text-white px-6 py-3 rounded-md font-medium transition-all hover:scale-105;
+}
+
+.luxury-card {
+  @apply bg-white rounded-xl overflow-hidden shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2;
+}
