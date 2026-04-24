@@ -4,11 +4,10 @@ import { Calendar, Users, Search, Home } from 'lucide-react';
 import heroImg from '../../assets/hero.png';
 
 const Hero = ({ onSearch }) => {
-  const [roomType, setRoomType] = useState('Tất cả');
+  const [roomType, setRoomType] = useState('Phòng Thường');
   const [guests, setGuests] = useState('1');
-  
+
   const roomTypeGuests = {
-    'Tất cả': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     'Phòng Thường': [1, 2, 3, 4],
     'Phòng VIP': [3, 4, 5, 6],
     'Phòng Tổng Thống': [7, 8, 9, 10]
@@ -19,7 +18,7 @@ const Hero = ({ onSearch }) => {
   return (
     <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `url(${heroImg})`,
@@ -32,7 +31,7 @@ const Hero = ({ onSearch }) => {
 
       {/* Content */}
       <div className="container mx-auto px-6 relative z-10 text-center text-white">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
@@ -40,8 +39,8 @@ const Hero = ({ onSearch }) => {
         >
           Chào đón bạn đến với <span className="text-luxury-gold">VanThi</span> Luxury
         </motion.h1>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
@@ -51,7 +50,7 @@ const Hero = ({ onSearch }) => {
         </motion.p>
 
         {/* Booking Widget */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -61,8 +60,8 @@ const Hero = ({ onSearch }) => {
             <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Ngày nhận phòng</label>
             <div className="relative">
               <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold pointer-events-none" size={18} />
-              <input 
-                type="date" 
+              <input
+                type="date"
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 cursor-pointer"
               />
             </div>
@@ -72,8 +71,8 @@ const Hero = ({ onSearch }) => {
             <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Ngày trả phòng</label>
             <div className="relative">
               <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold pointer-events-none" size={18} />
-              <input 
-                type="date" 
+              <input
+                type="date"
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 cursor-pointer"
               />
             </div>
@@ -83,12 +82,11 @@ const Hero = ({ onSearch }) => {
             <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Loại phòng</label>
             <div className="relative">
               <Home className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold" size={18} />
-              <select 
+              <select
                 value={roomType}
                 onChange={(e) => setRoomType(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 appearance-none cursor-pointer"
               >
-                <option value="Tất cả">Tất cả các loại phòng</option>
                 <option value="Phòng Thường">Phòng Thường</option>
                 <option value="Phòng VIP">Phòng VIP</option>
                 <option value="Phòng Tổng Thống">Phòng Tổng Thống</option>
@@ -100,7 +98,7 @@ const Hero = ({ onSearch }) => {
             <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Số lượng khách</label>
             <div className="relative">
               <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold" size={18} />
-              <select 
+              <select
                 value={guests}
                 onChange={(e) => setGuests(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 appearance-none cursor-pointer"
@@ -112,7 +110,7 @@ const Hero = ({ onSearch }) => {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={() => onSearch && onSearch({ type: roomType, guests })}
             className="bg-luxury-gold text-white h-[50px] rounded-lg font-bold flex items-center justify-center space-x-2 transition-transform hover:scale-[1.02] active:scale-[0.98] w-full"
           >
@@ -123,7 +121,7 @@ const Hero = ({ onSearch }) => {
       </div>
 
       {/* Scroll Down Indicator */}
-      <motion.div 
+      <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-white cursor-pointer"

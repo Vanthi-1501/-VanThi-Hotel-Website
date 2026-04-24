@@ -85,15 +85,14 @@ const RoomGrid = ({ filter }) => {
 
     const { type, guests } = filter;
     const filterLower = type.toLowerCase();
-    
+
     const filtered = rooms.filter(room => {
       // Logic lọc theo tên hoặc mô tả
       const name = room.name.toLowerCase();
-      
+      const desc = room.description.toLowerCase();
+
       let typeMatch = false;
-      if (filterLower.includes('tất cả')) {
-        typeMatch = true;
-      } else if (filterLower.includes('thường')) {
+      if (filterLower.includes('thường')) {
         typeMatch = name.includes('deluxe') || name.includes('city') || name.includes('thường');
       } else if (filterLower.includes('vip')) {
         typeMatch = name.includes('suite') || name.includes('executive') || name.includes('vip');
@@ -106,7 +105,7 @@ const RoomGrid = ({ filter }) => {
       // Lọc theo số lượng khách (nếu room.guests là chuỗi "X Khách" thì lấy số X)
       const roomCapacity = parseInt(room.guests);
       const requestedGuests = parseInt(guests);
-      
+
       const guestMatch = roomCapacity >= requestedGuests;
 
       return typeMatch && guestMatch;
@@ -118,7 +117,7 @@ const RoomGrid = ({ filter }) => {
     <section id="rooms" className="py-24 bg-luxury-cream">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -126,7 +125,7 @@ const RoomGrid = ({ filter }) => {
           >
             Chỗ nghỉ
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -148,21 +147,20 @@ const RoomGrid = ({ filter }) => {
               className="luxury-card group"
             >
               <div className="relative h-[300px] overflow-hidden">
-                <img 
-                  src={room.image} 
-                  alt={room.name} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                <img
+                  src={room.image}
+                  alt={room.name}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute top-4 left-4 bg-luxury-dark/80 text-white px-4 py-1 rounded backdrop-blur-sm text-sm font-medium">
                   Từ ${room.price}/đêm
                 </div>
-                <div className={`absolute top-4 right-4 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider backdrop-blur-md ${
-                  room.isAvailable ? 'bg-emerald-500/80 text-white' : 'bg-rose-500/80 text-white'
-                }`}>
+                <div className={`absolute top-4 right-4 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider backdrop-blur-md ${room.isAvailable ? 'bg-emerald-500/80 text-white' : 'bg-rose-500/80 text-white'
+                  }`}>
                   {room.isAvailable ? `Còn ${room.availableCount} phòng` : 'Hết phòng'}
                 </div>
               </div>
-              
+
               <div className="p-8">
                 <h3 className="text-2xl font-serif font-bold text-luxury-dark mb-4 group-hover:text-luxury-gold transition-colors">
                   {room.name}
@@ -170,7 +168,7 @@ const RoomGrid = ({ filter }) => {
                 <p className="text-gray-500 text-sm mb-6 line-clamp-2">
                   {room.description}
                 </p>
-                
+
                 <div className="flex items-center justify-between text-gray-400 text-xs uppercase tracking-widest border-t border-gray-100 pt-6 mb-6">
                   <div className="flex items-center gap-1">
                     <Maximize2 size={14} className="text-luxury-gold" />
@@ -186,7 +184,7 @@ const RoomGrid = ({ filter }) => {
                   </div>
                 </div>
 
-                <Link 
+                <Link
                   to={`/room/${room.id}`}
                   className="block w-full py-3 text-center border border-luxury-gold text-luxury-gold font-bold rounded-lg hover:bg-luxury-gold hover:text-white transition-all duration-300"
                 >
@@ -197,7 +195,7 @@ const RoomGrid = ({ filter }) => {
           )) : (
             <div className="col-span-full py-20 text-center">
               <p className="text-xl text-gray-500 italic">Rất tiếc, không tìm thấy phòng phù hợp với yêu cầu của bạn. Vui lòng chọn loại phòng hoặc số lượng khách khác.</p>
-              <button 
+              <button
                 onClick={() => setFilteredRooms(rooms)}
                 className="mt-6 text-luxury-gold hover:underline font-bold"
               >

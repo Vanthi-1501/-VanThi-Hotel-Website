@@ -27,6 +27,8 @@ const RoomDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [roomType, setRoomType] = useState(null);
+  const [services, setServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const currentUser = authService.getCurrentUser();
@@ -41,24 +43,31 @@ const RoomDetail = () => {
   });
 
   useEffect(() => {
-    const fetchDetail = async () => {
+    const fetchData = async () => {
       try {
-        const response = await roomService.getRoomTypes();
-        const type = response.data.find(t => t.id.toString() === id);
+        const [roomTypesRes, servicesRes] = await Promise.all([
+          roomService.getRoomTypes(),
+          roomService.getServices()
+        ]);
+        
+        const type = roomTypesRes.data.find(t => t.id.toString() === id);
         if (type) {
           setRoomType(type);
         } else {
           toast.error('Không tìm thấy loại phòng này.');
           navigate('/');
         }
+
+        // Chỉ lấy các dịch vụ ăn uống (hoặc tất cả dịch vụ đang có)
+        setServices(servicesRes.data);
       } catch (error) {
         console.error('Error:', error);
-        toast.error('Lỗi khi tải thông tin phòng.');
+        toast.error('Lỗi khi tải thông tin.');
       } finally {
         setLoading(false);
       }
     };
-    fetchDetail();
+    fetchData();
     window.scrollTo(0, 0);
   }, [id, navigate]);
 
@@ -93,6 +102,7 @@ const RoomDetail = () => {
         roomId: availableRoom.id,
         checkIn: new Date(formData.checkIn).toISOString(),
         checkOut: new Date(formData.checkOut).toISOString(),
+        serviceIds: selectedServices
       });
       
       toast.success('Đặt phòng thành công! Chúng tôi đã ghi nhận yêu cầu của bạn.');
@@ -265,6 +275,47 @@ const RoomDetail = () => {
                     className="w-full bg-white/10 border border-white/10 rounded-xl px-5 py-3 outline-none focus:ring-2 focus:ring-luxury-gold/50 transition-all text-white"
                   />
                 </div>
+                
+                {/* Dịch vụ ăn uống */}
+                {services.length > 0 && (
+                  <div className="space-y-4 pt-4 border-t border-white/10">
+                    <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-gray-400">Dịch vụ ăn uống đi kèm</label>
+                    <div className="grid grid-cols-1 gap-3">
+                      {services.map((service) => (
+                        <label 
+                          key={service.id} 
+                          className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
+                            selectedServices.includes(service.id) 
+                              ? 'bg-luxury-gold/20 border-luxury-gold' 
+                              : 'bg-white/5 border-white/10 hover:bg-white/10'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <input 
+                              type="checkbox"
+                              className="hidden"
+                              checked={selectedServices.includes(service.id)}
+                              onChange={() => {
+                                if (selectedServices.includes(service.id)) {
+                                  setSelectedServices(selectedServices.filter(id => id !== service.id));
+                                } else {
+                                  setSelectedServices([...selectedServices, service.id]);
+                                }
+                              }}
+                            />
+                            <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
+                              selectedServices.includes(service.id) ? 'bg-luxury-gold border-luxury-gold' : 'border-white/30'
+                            }`}>
+                              {selectedServices.includes(service.id) && <Check size={14} className="text-white" />}
+                            </div>
+                            <span className="text-sm font-medium">{service.name}</span>
+                          </div>
+                          <span className="text-luxury-gold font-bold text-sm">+${service.price}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="pt-4">
                   <div className="flex justify-between border-t border-white/10 pt-6 mb-6">
@@ -274,7 +325,10 @@ const RoomDetail = () => {
                       } đêm)
                     </span>
                     <span className="text-3xl font-bold">
-                      ${(roomType.price * Math.max(1, Math.round((new Date(formData.checkOut) - new Date(formData.checkIn)) / (1000 * 60 * 60 * 24)))).toLocaleString()}
+                      ${(
+                        (roomType.price * Math.max(1, Math.round((new Date(formData.checkOut) - new Date(formData.checkIn)) / (1000 * 60 * 60 * 24)))) +
+                        services.filter(s => selectedServices.includes(s.id)).reduce((sum, s) => sum + s.price, 0)
+                      ).toLocaleString()}
                     </span>
                   </div>
                   
