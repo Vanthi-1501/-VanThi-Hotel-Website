@@ -40,8 +40,9 @@ const DEFAULT_ROOMS = [
   }
 ];
 
-const RoomGrid = () => {
+const RoomGrid = ({ filter }) => {
   const [rooms, setRooms] = useState([]);
+  const [filteredRooms, setFilteredRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -75,6 +76,44 @@ const RoomGrid = () => {
 
     fetchRoomTypes();
   }, []);
+
+  useEffect(() => {
+    if (!filter) {
+      setFilteredRooms(rooms);
+      return;
+    }
+
+    const { type, guests } = filter;
+    const filterLower = type.toLowerCase();
+    
+    const filtered = rooms.filter(room => {
+      // Logic lọc theo tên hoặc mô tả
+      const name = room.name.toLowerCase();
+      
+      let typeMatch = false;
+      if (filterLower.includes('tất cả')) {
+        typeMatch = true;
+      } else if (filterLower.includes('thường')) {
+        typeMatch = name.includes('deluxe') || name.includes('city') || name.includes('thường');
+      } else if (filterLower.includes('vip')) {
+        typeMatch = name.includes('suite') || name.includes('executive') || name.includes('vip');
+      } else if (filterLower.includes('tổng thống')) {
+        typeMatch = name.includes('penthouse') || name.includes('president') || name.includes('tổng thống');
+      } else {
+        typeMatch = true; // Fallback
+      }
+
+      // Lọc theo số lượng khách (nếu room.guests là chuỗi "X Khách" thì lấy số X)
+      const roomCapacity = parseInt(room.guests);
+      const requestedGuests = parseInt(guests);
+      
+      const guestMatch = roomCapacity >= requestedGuests;
+
+      return typeMatch && guestMatch;
+    });
+
+    setFilteredRooms(filtered);
+  }, [filter, rooms]);
   return (
     <section id="rooms" className="py-24 bg-luxury-cream">
       <div className="container mx-auto px-6">
@@ -99,7 +138,7 @@ const RoomGrid = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {rooms.map((room, index) => (
+          {filteredRooms.length > 0 ? filteredRooms.map((room, index) => (
             <motion.div
               key={room.id}
               initial={{ opacity: 0, y: 30 }}
@@ -155,7 +194,17 @@ const RoomGrid = () => {
                 </Link>
               </div>
             </motion.div>
-          ))}
+          )) : (
+            <div className="col-span-full py-20 text-center">
+              <p className="text-xl text-gray-500 italic">Rất tiếc, không tìm thấy phòng phù hợp với yêu cầu của bạn. Vui lòng chọn loại phòng hoặc số lượng khách khác.</p>
+              <button 
+                onClick={() => setFilteredRooms(rooms)}
+                className="mt-6 text-luxury-gold hover:underline font-bold"
+              >
+                Xem tất cả các phòng
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

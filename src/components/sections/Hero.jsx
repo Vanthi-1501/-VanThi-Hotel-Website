@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Users, Search } from 'lucide-react';
+import { Calendar, Users, Search, Home } from 'lucide-react';
 import heroImg from '../../assets/hero.png';
 
-const Hero = () => {
+const Hero = ({ onSearch }) => {
+  const [roomType, setRoomType] = useState('Tất cả');
+  const [guests, setGuests] = useState('1');
+  
+  const roomTypeGuests = {
+    'Tất cả': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'Phòng Thường': [1, 2, 3, 4],
+    'Phòng VIP': [3, 4, 5, 6],
+    'Phòng Tổng Thống': [7, 8, 9, 10]
+  };
+
+  const currentGuests = roomTypeGuests[roomType] || [1, 2, 3, 4];
+
   return (
     <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -43,16 +55,15 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-white p-4 md:p-6 rounded-xl shadow-2xl max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 items-end"
+          className="bg-white p-4 md:p-6 rounded-xl shadow-2xl max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end"
         >
           <div className="text-left">
             <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Ngày nhận phòng</label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold" size={18} />
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold pointer-events-none" size={18} />
               <input 
-                type="text" 
-                placeholder="Chọn ngày" 
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20"
+                type="date" 
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 cursor-pointer"
               />
             </div>
           </div>
@@ -60,12 +71,28 @@ const Hero = () => {
           <div className="text-left">
             <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Ngày trả phòng</label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold" size={18} />
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold pointer-events-none" size={18} />
               <input 
-                type="text" 
-                placeholder="Chọn ngày" 
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20"
+                type="date" 
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 cursor-pointer"
               />
+            </div>
+          </div>
+
+          <div className="text-left">
+            <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Loại phòng</label>
+            <div className="relative">
+              <Home className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold" size={18} />
+              <select 
+                value={roomType}
+                onChange={(e) => setRoomType(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 appearance-none cursor-pointer"
+              >
+                <option value="Tất cả">Tất cả các loại phòng</option>
+                <option value="Phòng Thường">Phòng Thường</option>
+                <option value="Phòng VIP">Phòng VIP</option>
+                <option value="Phòng Tổng Thống">Phòng Tổng Thống</option>
+              </select>
             </div>
           </div>
 
@@ -73,18 +100,24 @@ const Hero = () => {
             <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Số lượng khách</label>
             <div className="relative">
               <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-luxury-gold" size={18} />
-              <select className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 appearance-none">
-                <option>1 Khách</option>
-                <option>2 Khách</option>
-                <option>3 Khách</option>
-                <option>4+ Khách</option>
+              <select 
+                value={guests}
+                onChange={(e) => setGuests(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-luxury-dark focus:outline-none focus:ring-2 focus:ring-luxury-gold/20 appearance-none cursor-pointer"
+              >
+                {currentGuests.map(num => (
+                  <option key={num} value={num}>{num} Khách</option>
+                ))}
               </select>
             </div>
           </div>
 
-          <button className="bg-luxury-gold text-white h-[50px] rounded-lg font-bold flex items-center justify-center space-x-2 transition-transform hover:scale-[1.02] active:scale-[0.98]">
+          <button 
+            onClick={() => onSearch && onSearch({ type: roomType, guests })}
+            className="bg-luxury-gold text-white h-[50px] rounded-lg font-bold flex items-center justify-center space-x-2 transition-transform hover:scale-[1.02] active:scale-[0.98] w-full"
+          >
             <Search size={20} />
-            <span>Tìm kiếm phòng</span>
+            <span>Tìm kiếm</span>
           </button>
         </motion.div>
       </div>
