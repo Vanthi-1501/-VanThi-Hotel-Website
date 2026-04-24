@@ -5,12 +5,12 @@ import deluxImg from '../../assets/room-deluxe.png';
 import suiteImg from '../../assets/room-suite.png';
 
 const images = [
-  { src: heroImg, title: 'Grand Lobby', category: 'Architecture' },
-  { src: deluxImg, title: 'Deluxe Room', category: 'Interior' },
-  { src: suiteImg, title: 'Executive Suite', category: 'Luxury' },
-  { src: heroImg, title: 'Fine Dining', category: 'Dining' }, // Placeholder
-  { src: deluxImg, title: 'Wellness Spa', category: 'Spa' }, // Placeholder
-  { src: suiteImg, title: 'Sunset Terrace', category: 'Outdoor' }, // Placeholder
+  { src: heroImg, title: 'Sảnh chính', category: 'Kiến trúc' },
+  { src: deluxImg, title: 'Phòng Deluxe', category: 'Nội thất' },
+  { src: suiteImg, title: 'Phòng Suite', category: 'Sang trọng' },
+  { src: heroImg, title: 'Nhà hàng', category: 'Ẩm thực' }, 
+  { src: deluxImg, title: 'Wellness Spa', category: 'Thư giãn' }, 
+  { src: suiteImg, title: 'Sân hiên Hoàng hôn', category: 'Ngoại thất' }, 
 ];
 
 const Gallery = () => {
@@ -24,7 +24,7 @@ const Gallery = () => {
             viewport={{ once: true }}
             className="text-luxury-gold uppercase tracking-[0.3em] font-bold text-sm mb-4 block"
           >
-            Visual Journey
+            Hành trình Thị giác
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -33,7 +33,7 @@ const Gallery = () => {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-serif font-bold text-luxury-dark"
           >
-            Memorable Moments
+            Khoảnh khắc Đáng nhớ
           </motion.h2>
         </div>
 

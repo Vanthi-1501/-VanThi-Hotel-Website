@@ -1,31 +1,32 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import Hero from './components/sections/Hero';
-import About from './components/sections/About';
-import RoomGrid from './components/sections/RoomGrid';
-import Services from './components/sections/Services';
-import Gallery from './components/sections/Gallery';
-import Testimonials from './components/sections/Testimonials';
-import Contact from './components/sections/Contact';
+import Home from './pages/Home';
+import RoomDetail from './pages/RoomDetail';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
-    <div className="min-h-screen bg-luxury-cream overflow-x-hidden">
-      <Navbar />
-      
-      <main>
-        <Hero />
-        <About />
-        <RoomGrid />
-        <Services />
-        <Gallery />
-        <Testimonials />
-        <Contact />
-      </main>
+    <Router>
+      <div className="min-h-screen bg-luxury-cream overflow-x-hidden">
+        <Toaster position="top-center" />
+        <Navbar />
+        
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/room/:id" element={<RoomDetail />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

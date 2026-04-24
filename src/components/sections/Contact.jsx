@@ -15,7 +15,7 @@ const Contact = () => {
               viewport={{ once: true }}
               className="text-luxury-gold uppercase tracking-[0.3em] font-bold text-sm mb-4 block"
             >
-              Contact Us
+              Liên hệ với chúng tôi
             </motion.span>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -24,7 +24,7 @@ const Contact = () => {
               transition={{ delay: 0.1 }}
               className="text-4xl font-serif font-bold text-luxury-dark mb-8"
             >
-              Get in Touch
+              Kết nối ngay
             </motion.h2>
             
             <div className="space-y-8">
@@ -33,8 +33,8 @@ const Contact = () => {
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-luxury-dark mb-1">Our Location</h4>
-                  <p className="text-gray-500">123 Luxury Avenue, District 1,<br />Ho Chi Minh City, Vietnam</p>
+                  <h4 className="font-bold text-luxury-dark mb-1">Địa chỉ</h4>
+                  <p className="text-gray-500">123 Đại lộ Luxury, Quận 1,<br />Thành phố Hồ Chí Minh, Việt Nam</p>
                 </div>
               </div>
 
@@ -43,7 +43,7 @@ const Contact = () => {
                   <Phone size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-luxury-dark mb-1">Reservation</h4>
+                  <h4 className="font-bold text-luxury-dark mb-1">Đặt phòng</h4>
                   <p className="text-gray-500">+84 (028) 1234 5678</p>
                 </div>
               </div>
@@ -53,7 +53,7 @@ const Contact = () => {
                   <Mail size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-luxury-dark mb-1">Email Us</h4>
+                  <h4 className="font-bold text-luxury-dark mb-1">Email</h4>
                   <p className="text-gray-500">reservations@vanthiluxury.com</p>
                 </div>
               </div>
@@ -70,24 +70,24 @@ const Contact = () => {
             >
               <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Full Name</label>
-                  <input type="text" placeholder="Your Name" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm" />
+                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Họ và tên</label>
+                  <input type="text" placeholder="Nhập tên của bạn" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Email Address</label>
-                  <input type="email" placeholder="email@example.com" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm" />
+                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Địa chỉ Email</label>
+                  <input type="email" placeholder="email@vi-du.com" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm" />
                 </div>
                 <div className="md:col-span-2 space-y-2">
-                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Subject</label>
-                  <input type="text" placeholder="How can we help?" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm" />
+                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Chủ đề</label>
+                  <input type="text" placeholder="Chúng tôi có thể giúp gì cho bạn?" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm" />
                 </div>
                 <div className="md:col-span-2 space-y-2">
-                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Message</label>
-                  <textarea rows="4" placeholder="Your Message" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm resize-none"></textarea>
+                  <label className="text-xs uppercase tracking-widest font-bold text-gray-500">Lời nhắn</label>
+                  <textarea rows="4" placeholder="Nội dung lời nhắn" className="w-full px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-luxury-gold/20 outline-none shadow-sm resize-none"></textarea>
                 </div>
                 <div className="md:col-span-2">
                   <button className="btn-primary w-full md:w-auto px-10 flex items-center justify-center space-x-2">
-                    <span>Send Message</span>
+                    <span>Gửi lời nhắn</span>
                     <Send size={18} />
                   </button>
                 </div>

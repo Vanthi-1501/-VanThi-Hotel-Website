@@ -1,44 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Maximize2, Users, BedDouble } from 'lucide-react';
+import { roomService } from '../../services/roomService';
 import deluxImg from '../../assets/room-deluxe.png';
 import suiteImg from '../../assets/room-suite.png';
 import penthouseImg from '../../assets/room-penthouse.png';
 
-const rooms = [
+const DEFAULT_ROOMS = [
   {
     id: 1,
     name: 'Deluxe City View',
     image: deluxImg,
     price: 199,
-    description: 'A spacious room with a breathtaking view of the city skyline, equipped with premium amenities.',
+    description: 'Căn phòng rộng rãi với tầm nhìn ngoạn mục ra đường chân trời thành phố, được trang bị đầy đủ tiện nghi cao cấp.',
     size: '45m²',
-    guests: '2 Guests',
-    bed: 'King Bed'
+    guests: '2 Khách',
+    bed: 'Giường King'
   },
   {
     id: 2,
     name: 'Executive Suite',
     image: suiteImg,
     price: 349,
-    description: 'Our executive suite offers separate living and sleeping areas with exclusive lounge access.',
+    description: 'Phòng suite cao cấp của chúng tôi có khu vực khách và ngủ riêng biệt cùng đặc quyền sử dụng sảnh chờ riêng.',
     size: '85m²',
-    guests: '3 Guests',
-    bed: 'Super King'
+    guests: '3 Khách',
+    bed: 'Giường Super King'
   },
   {
     id: 3,
     name: 'Penthouse Panorama',
     image: penthouseImg,
     price: 899,
-    description: 'The ultimate luxury experience featuring a private terrace and 360-degree views.',
+    description: 'Trải nghiệm xa hoa tột bậc với sân hiên riêng biệt và tầm nhìn 360 độ toàn cảnh thành phố.',
     size: '150m²',
-    guests: '4 Guests',
-    bed: '2 King Beds'
+    guests: '4 Khách',
+    bed: '2 Giường King'
   }
 ];
 
 const RoomGrid = () => {
+  const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRoomTypes = async () => {
+      try {
+        const response = await roomService.getRoomTypes();
+        if (response.data && response.data.length > 0) {
+          const formattedRooms = response.data.map(type => ({
+            id: type.id,
+            name: type.name,
+            price: type.price,
+            isAvailable: type.isAvailable,
+            availableCount: type.availableCount,
+            description: type.description || 'Căn phòng sang trọng với đầy đủ tiện ích và dịch vụ cao cấp.',
+            image: type.image || (type.id % 3 === 0 ? penthouseImg : type.id % 2 === 0 ? suiteImg : deluxImg),
+            size: type.size || '45m²',
+            guests: type.guests || '2 Khách',
+            bed: type.bed || 'Giường King'
+          }));
+          setRooms(formattedRooms);
+        } else {
+          setRooms(DEFAULT_ROOMS);
+        }
+      } catch (error) {
+        console.error('Error fetching room types:', error);
+        setRooms(DEFAULT_ROOMS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoomTypes();
+  }, []);
   return (
     <section id="rooms" className="py-24 bg-luxury-cream">
       <div className="container mx-auto px-6">
@@ -49,7 +85,7 @@ const RoomGrid = () => {
             viewport={{ once: true }}
             className="text-luxury-gold uppercase tracking-[0.3em] font-bold text-sm mb-4 block"
           >
-            Accommodations
+            Chỗ nghỉ
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -58,7 +94,7 @@ const RoomGrid = () => {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-serif font-bold text-luxury-dark"
           >
-            Luxury Rooms & Suites
+            Phòng & Suite Sang Trọng
           </motion.h2>
         </div>
 
@@ -79,7 +115,12 @@ const RoomGrid = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                 />
                 <div className="absolute top-4 left-4 bg-luxury-dark/80 text-white px-4 py-1 rounded backdrop-blur-sm text-sm font-medium">
-                  From ${room.price}/night
+                  Từ ${room.price}/đêm
+                </div>
+                <div className={`absolute top-4 right-4 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider backdrop-blur-md ${
+                  room.isAvailable ? 'bg-emerald-500/80 text-white' : 'bg-rose-500/80 text-white'
+                }`}>
+                  {room.isAvailable ? `Còn ${room.availableCount} phòng` : 'Hết phòng'}
                 </div>
               </div>
               
@@ -106,9 +147,12 @@ const RoomGrid = () => {
                   </div>
                 </div>
 
-                <button className="w-full py-3 border border-luxury-gold text-luxury-gold font-bold rounded-lg hover:bg-luxury-gold hover:text-white transition-all duration-300">
-                  Book Now
-                </button>
+                <Link 
+                  to={`/room/${room.id}`}
+                  className="block w-full py-3 text-center border border-luxury-gold text-luxury-gold font-bold rounded-lg hover:bg-luxury-gold hover:text-white transition-all duration-300"
+                >
+                  Đặt phòng ngay
+                </Link>
               </div>
             </motion.div>
           ))}

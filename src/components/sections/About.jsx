@@ -36,12 +36,12 @@ const About = () => {
             transition={{ duration: 0.8 }}
             className="w-full lg:w-1/2"
           >
-            <span className="text-luxury-gold uppercase tracking-[0.3em] font-bold text-sm mb-4 block">About Our Hotel</span>
+            <span className="text-luxury-gold uppercase tracking-[0.3em] font-bold text-sm mb-4 block">Về Khách Sạn Chúng Tôi</span>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-luxury-dark mb-8 leading-tight">
-              A Haven of <span className="italic">Excellence</span> and Tranquility
+              Nơi Hội Tụ của sự <span className="italic">Hoàn Hảo</span> và Yên Bình
             </h2>
             <p className="text-gray-600 mb-8 leading-relaxed text-lg">
-              Located in the vibrant heart of the city, VanThi Luxury Hotel offers an unparalleled experience of elegance. Since our inception, we have been dedicated to providing a sanctuary of sophistication for travelers seeking the extraordinary.
+              Tọa lạc tại trái tim sôi động của thành phố, Khách sạn VanThi Luxury mang đến trải nghiệm thanh lịch vô song. Kể từ khi thành lập, chúng tôi đã tận tâm xây dựng một thiên đường tinh tế cho những du khách tìm kiếm sự phi thường.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
@@ -50,8 +50,8 @@ const About = () => {
                   <Award size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-luxury-dark mb-1">5-Star Excellence</h4>
-                  <p className="text-gray-500 text-sm">Award-winning service and amenities.</p>
+                  <h4 className="font-bold text-luxury-dark mb-1">Tiêu chuẩn 5 Sao</h4>
+                  <p className="text-gray-500 text-sm">Dịch vụ và tiện ích đẳng cấp thế giới.</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -59,8 +59,8 @@ const About = () => {
                   <Compass size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-luxury-dark mb-1">Prime Location</h4>
-                  <p className="text-gray-500 text-sm">Minutes away from the city's key landmarks.</p>
+                  <h4 className="font-bold text-luxury-dark mb-1">Vị trí đắc địa</h4>
+                  <p className="text-gray-500 text-sm">Chỉ cách các địa danh nổi tiếng vài phút đi bộ.</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -68,14 +68,14 @@ const About = () => {
                   <Heart size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-luxury-dark mb-1">True Hospitality</h4>
-                  <p className="text-gray-500 text-sm">Where every guest is treated like royalty.</p>
+                  <h4 className="font-bold text-luxury-dark mb-1">Sự mến khách</h4>
+                  <p className="text-gray-500 text-sm">Nơi mọi vị khách đều được đối đãi như hoàng gia.</p>
                 </div>
               </div>
             </div>
 
             <button className="btn-primary">
-              Learn More
+              Tìm hiểu thêm
             </button>
           </motion.div>
         </div>
